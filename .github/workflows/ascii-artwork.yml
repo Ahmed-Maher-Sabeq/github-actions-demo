@@ -1,4 +1,4 @@
-name: my first workflow
+name: ascii artwork
 on: push
 
 jobs:
