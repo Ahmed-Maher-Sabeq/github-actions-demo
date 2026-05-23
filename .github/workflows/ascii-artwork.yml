@@ -12,4 +12,7 @@ jobs:
               run: ls -la
 
             - name: execute ascii-script
-              run: ./ascii-script.sh
+              run: | 
+                chmod +x ascii-script.sh
+                ./ascii-script.sh
+              
