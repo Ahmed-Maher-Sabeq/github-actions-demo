@@ -7,11 +7,23 @@ jobs:
         steps:
             - name: checkout repository
               uses: actions/checkout@v4
-            - name: welcome message
-              run: echo "Welcome to my first workflow"
-            - name: list files
-              run: ls -la
-            - name: show current directory
-              run: pwd
-            - name: read file content
-              run: cat README.md
+            
+            - name: welcome message and list files and show current directory and read file content
+              run: |
+                echo "Welcome to my first workflow"
+                ls -la
+                pwd
+                cat README.md
+            - name: generate ascii art
+              run: cowsay -f dragon "Hello, World!" >> dragon.txt
+                
+
+
+            # - name: list files
+            #   run: ls -
+                
+            # - name: show current directory
+            #   run: pwd
+
+            # - name: read file content
+            #   run: cat README.md
