@@ -5,6 +5,8 @@ jobs:
     first_job:
         runs-on: ubuntu-22.04
         steps:
+            - name: checkout repository
+              uses: actions/checkout@v4
             - name: welcome message
               run: echo "Welcome to my first workflow"
             - name: list files
