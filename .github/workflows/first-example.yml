@@ -14,8 +14,7 @@ jobs:
                 ls -la
                 pwd
                 cat README.md
-            - name: generate ascii art
-              run: cowsay -f dragon "Hello, World!" >> dragon.txt
+            
                 
 
 

@@ -1,0 +1,29 @@
+name: my first workflow
+on: push
+
+jobs:
+    first_job:
+        runs-on: ubuntu-22.04
+        steps:
+            - name: checkout repository
+              uses: actions/checkout@v4
+            
+            - name: install cowsay
+              run: sudo apt-get install -y cowsay
+            
+            - name: generate ascii art
+              run: cowsay -f dragon "Hello, World!" >> dragon.txt
+
+            - name: test file existence
+              run: |
+                if [ -f dragon.txt ]; then
+                  echo "File exists."
+                else
+                  echo "File does not exist."
+                fi
+
+            - name: display ascii art
+              run: cat dragon.txt
+            
+            - name: checkout repo files
+              run: ls -la
