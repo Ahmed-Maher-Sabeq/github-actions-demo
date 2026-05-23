@@ -2,17 +2,60 @@ name: ascii artwork
 on: push
 
 jobs:
-    ascii_artwork_job:
-        runs-on: ubuntu-22.04
-        steps:
-            - name: checkout repository
-              uses: actions/checkout@v4
-            
-            - name: checkout repo files
-              run: ls -la
+  generate_ascii_art:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
 
-            - name: execute ascii-script
-              run: | 
-                chmod +x ascii-script.sh
-                ./ascii-script.sh
+      - name: install cowsay
+        run: sudo apt-get update && sudo apt-get install -y cowsay
+
+      - name: generate ascii art
+        run: cowsay -f dragon "Hello, World!" >> dragon.txt
+
+      - name: upload dragon artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: dragon-artifact
+          path: dragon.txt
+
+  test_file_existence:
+    needs: generate_ascii_art
+    runs-on: ubuntu-22.04
+    steps:
+      - name: download dragon artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: dragon-artifact
+
+      - name: test file existence
+        run: |
+          if [ -f dragon.txt ]; then
+            echo "File exists."
+          else
+            echo "File does not exist."
+          fi
+
+  display_ascii_art:
+    needs: test_file_existence
+    runs-on: ubuntu-22.04
+    steps:
+      - name: download dragon artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: dragon-artifact
+
+      - name: display ascii art
+        run: cat dragon.txt
+
+  list_repository_files:
+    needs: display_ascii_art
+    runs-on: ubuntu-22.04
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      - name: list repository files
+        run: ls -la
               
